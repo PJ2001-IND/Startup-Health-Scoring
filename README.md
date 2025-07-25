@@ -33,7 +33,7 @@ Maintains consistency with other positively correlated features during score agg
 
 Top Performer:
 Startup ID: S004 — High MAUs (93K+), strong team (5+ yrs), large market size, and good funding. Moderate burn helped it score well.
-📉 Bottom Performer:
+Bottom Performer:
 Startup ID: S063 — Despite decent valuation, this startup had very low MAUs, a small market, and high burn rate.
 
 

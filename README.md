@@ -1,47 +1,186 @@
-Objective
-This project simulates a Startup Evaluation Engine, similar to a credit score but for startups. We evaluate each startup on multiple business indicators like team quality, market size, traction, and financials — and generate a composite score (out of 100) to rank startup potential.
+# 🚀 Startup Health Scoring Engine
 
+![Python](https://img.shields.io/badge/Python-3.8+-blue?style=flat-square&logo=python)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?style=flat-square&logo=jupyter)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=flat-square&logo=pandas)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-ML-green?style=flat-square&logo=scikit-learn)
+![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
 
+> A data-driven **Startup Evaluation Engine** — similar to a credit score, but for startups. This project scores and ranks startups out of 100 based on key business indicators like traction, market size, team quality, and financial health using a weighted composite scoring model.
 
+---
 
+## 📌 Problem Statement
 
-Why These Weights Were Chosen
+Investors and accelerators evaluate hundreds of startups, yet most early-stage assessments remain subjective. This project builds a **quantitative, transparent, and reproducible scoring framework** that evaluates startups across multiple business dimensions — enabling data-driven investment and screening decisions.
 
-| Feature                   | Weight | Reasoning                                                    |
-| ------------------------- | ------ | ------------------------------------------------------------ |
-| `monthly_active_users`    | 25%    | Traction is a key success driver — shows product-market fit. |
-| `market_size_million_usd` | 20%    | Large addressable market implies scalability potential.      |
-| `team_experience`         | 15%    | Strong founding teams improve execution.                     |
-| `funds_raised_inr`        | 15%    | Shows investor confidence and runway.                        |
-| `valuation_inr`           | 15%    | Often reflects market confidence.                            |
-| `monthly_burn_rate_inr`   | 10%    | Penalized — leaner startups are more resilient.              |
+---
 
+## 🎯 Objective
 
+- Design a composite scoring model that evaluates startups on 6 key business indicators
+- Apply Min-Max normalisation and weighted aggregation to generate a score out of 100
+- Rank startups from highest to lowest potential
+- Visualise score distributions, feature importance, and correlations to extract actionable insights
 
+---
 
+## ⚖️ Scoring Framework
 
-How Negatively Correlated Metrics Were Handled
+The health score is a **weighted composite of 6 features**, carefully chosen to reflect real-world startup evaluation criteria:
 
-The Monthly Burn Rate is a cost-related metric — the lower, the better. However, since Min-Max normalization normally gives higher scores to higher values, we inverted it:
-df_scaled['monthly_burn_rate_inr'] = 1 - scaler.fit_transform(df['monthly_burn_rate_inr'].values.reshape(-1,1))
+| Feature | Weight | Reasoning |
+|---|---|---|
+| `monthly_active_users` | **25%** | Traction is the strongest signal of product-market fit |
+| `market_size_million_usd` | **20%** | Large TAM implies scalability and growth potential |
+| `team_experience` | **15%** | Experienced founding teams execute better under pressure |
+| `funds_raised_inr` | **15%** | Reflects investor confidence and available runway |
+| `valuation_inr` | **15%** | Market confidence indicator |
+| `monthly_burn_rate_inr` | **10%** | Penalised — leaner startups are more resilient |
 
-This ensures that:
+### 🔄 Handling Negatively Correlated Metrics
 
-A startup with lower expenses scores closer to 1
-A startup with higher burn scores closer to 0
-Maintains consistency with other positively correlated features during score aggregation
+`monthly_burn_rate_inr` is a cost metric — lower is better. Since Min-Max normalisation ordinarily assigns higher scores to higher values, it was **inverted** before aggregation:
 
-Top Performer:
-Startup ID: S004 — High MAUs (93K+), strong team (5+ yrs), large market size, and good funding. Moderate burn helped it score well.
-Bottom Performer:
-Startup ID: S063 — Despite decent valuation, this startup had very low MAUs, a small market, and high burn rate.
+```python
+df_scaled['monthly_burn_rate_inr'] = 1 - scaler.fit_transform(
+    df['monthly_burn_rate_inr'].values.reshape(-1, 1)
+)
+```
 
+This ensures a startup with a **lower burn rate scores closer to 1**, maintaining consistency with all other positively correlated features.
 
+---
 
+## 📊 Visualisations
 
+The project includes four key charts saved as PNG files:
 
-Any surprises or insights from your ranking
+| Chart | File | Description |
+|---|---|---|
+| Score Distribution | `score_distribution.png` | Histogram of startup health scores across the dataset |
+| Feature Importance | `feature_importance.png` | Relative weight and contribution of each feature |
+| Correlation Heatmap | `correlation_heatmap.png` | Inter-feature correlations to detect redundancy |
+| Bar Chart | `bar_chart.png` | Top and bottom ranked startups by health score |
 
-Burn rate alone doesn’t determine rank, but high burn + low users is a bad combo.
-Some startups raised lots of funding, but still ranked low due to poor traction or small markets.
-Market size and user base are most consistently correlated with high scores.
+### Score Distribution
+![Score Distribution](score_distribution.png)
+
+### Feature Importance
+![Feature Importance](feature_importance.png)
+
+### Correlation Heatmap
+![Correlation Heatmap](correlation_heatmap.png)
+
+---
+
+## 🏆 Key Results
+
+**Top Performer — Startup S004**
+- Monthly Active Users: 93K+
+- Team Experience: 5+ years
+- Large market size and strong funding
+- Moderate burn rate — lean and well-funded
+
+**Bottom Performer — Startup S063**
+- Very low MAUs despite decent valuation
+- Small addressable market
+- High burn rate with poor traction — classic danger zone
+
+---
+
+## 💡 Key Insights
+
+- **Burn rate alone doesn't determine rank** — but high burn + low users is a consistently poor combination
+- Startups that raised significant funding but showed low traction still ranked poorly, validating that capital ≠ health
+- **Market size and user base** are the two features most consistently correlated with high composite scores
+- Some high-valuation startups ranked surprisingly low — a signal that market sentiment and fundamentals can diverge
+
+---
+
+## 📂 Dataset
+
+| Property | Detail |
+|---|---|
+| File | `Startup_Scoring_Dataset.csv` |
+| Records | Multiple startup entries (synthetic / simulated) |
+| Features | MAUs, Market Size, Team Experience, Funds Raised, Valuation, Burn Rate |
+| Target | Composite Health Score (0–100) |
+
+---
+
+## 🛠️ Tech Stack
+
+| Tool | Purpose |
+|---|---|
+| Python | Core programming language |
+| Pandas | Data manipulation and feature engineering |
+| NumPy | Numerical operations and normalisation |
+| Scikit-learn | Min-Max scaling |
+| Matplotlib / Seaborn | Visualisation of scores, heatmaps, and rankings |
+| Jupyter Notebook | Interactive analysis environment |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
+```
+
+### Run the Notebook
+
+```bash
+# Clone the repository
+git clone https://github.com/PJ2001-IND/Startup-Health-Scoring.git
+
+# Navigate into the directory
+cd Startup-Health-Scoring
+
+# Launch Jupyter
+jupyter notebook startup_health_scoring.ipynb
+```
+
+---
+
+## 📁 Project Structure
+
+```
+📦 Startup-Health-Scoring
+ ┣ 📓 startup_health_scoring.ipynb     # Main scoring pipeline and analysis
+ ┣ 📄 Startup_Scoring_Dataset.csv      # Input dataset
+ ┣ 📊 score_distribution.png           # Score distribution chart
+ ┣ 📊 feature_importance.png           # Feature weight visualisation
+ ┣ 📊 correlation_heatmap.png          # Feature correlation heatmap
+ ┣ 📊 bar_chart.png                    # Top/bottom startup ranking chart
+ ┗ 📄 README.md                        # Project documentation
+```
+
+---
+
+## 🔭 Future Scope
+
+- Extend the model to include qualitative signals (founder background, product category, social media traction)
+- Build an interactive **Streamlit dashboard** where users can input startup data and receive a live score
+- Apply **clustering** (K-Means) to group startups into tiers: Promising, Average, At-Risk
+- Incorporate real-world startup data from Crunchbase or Tracxn APIs for validation
+
+---
+
+## 👤 Author
+
+**Praasuk Jain**
+- GitHub: [@PJ2001-IND](https://github.com/PJ2001-IND)
+- LinkedIn: [praasuk-jain](https://www.linkedin.com/in/praasuk-jain-425b6b1a3/)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+> ⭐ If you found this project useful, consider giving it a star!

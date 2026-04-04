@@ -4,7 +4,6 @@
 ![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?style=flat-square&logo=jupyter)
 ![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=flat-square&logo=pandas)
 ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-ML-green?style=flat-square&logo=scikit-learn)
-![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
 
 > A data-driven **Startup Evaluation Engine** — similar to a credit score, but for startups. This project scores and ranks startups out of 100 based on key business indicators like traction, market size, team quality, and financial health using a weighted composite scoring model.
 
@@ -174,12 +173,6 @@ jupyter notebook startup_health_scoring.ipynb
 **Praasuk Jain**
 - GitHub: [@PJ2001-IND](https://github.com/PJ2001-IND)
 - LinkedIn: [praasuk-jain](https://www.linkedin.com/in/praasuk-jain-425b6b1a3/)
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
 
 ---
 

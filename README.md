@@ -5,7 +5,6 @@
 ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-ML-green?style=flat-square&logo=scikit-learn)
 ![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=flat-square&logo=pandas)
 ![Random Forest](https://img.shields.io/badge/Model-Random%20Forest%20Regressor-blueviolet?style=flat-square)
-![License](https://img.shields.io/badge/License-Academic-lightgrey?style=flat-square)
 
 > A **weighted composite scoring model** built to evaluate and rank startup health across 100 startups — using Min-Max normalisation, business-intuition-driven feature weights, and **Random Forest Regression** for feature importance validation. The pipeline covers data preprocessing, normalisation, composite score computation, startup ranking, visualisation, and cross-validated model evaluation.
 
